@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-dotenv.config({path: "./config.env"})
+dotenv.config({ path: "./config.env" })
 
 const clientOptions = {
-    useUnifiedTopology : true,
-    socketTimeoutMS : 30000,
+    useUnifiedTopology: true,
     useNewUrlParser: true,
     autoIndex: false,
 }
