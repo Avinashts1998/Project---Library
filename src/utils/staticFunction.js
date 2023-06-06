@@ -1,4 +1,3 @@
-
 exports.getAllBooks = async (argsData, authData) => {
     const books = [
         {
