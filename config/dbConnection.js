@@ -9,13 +9,18 @@ const clientOptions = {
 }
 
 const initClientDbConnection = () => {
-    const db = mongoose.createConnection(process.env.MONGO_CONNECTION_URL, clientOptions)
+    try {
+        const db = mongoose.createConnection(process.env.MONGO_CONNECTION_URL, clientOptions)
 
-    db.on("error", console.error.bind(console, "MongoDB Connection Error"))
-    db.once("open", function () {
-        console.log('Database Connected Successfuly :::: Keri Vada Makkale 🤩')
-    });
-    return db;
+        db.on("error", console.error.bind(console, "MongoDB Connection Error"))
+        db.once("open", function () {
+            console.log('Database Connected Successfuly :::: Keri Vada Makkale 🤩')
+            
+        });
+        return db;
+    } catch (error) {
+        console.log(error)
+    }
 };
 
 module.exports = {
