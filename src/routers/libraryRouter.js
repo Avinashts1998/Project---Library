@@ -6,7 +6,11 @@ const router = express.Router()
 
 router
     .route("/get-all-books")
-    .post(libraryController.getAllBooks)
+    .get(libraryController.getAllBooks)
+
+router
+    .route("/insert-book")
+    .post(libraryController.insertBooks)
 
 
 module.exports = router // export 
