@@ -21,7 +21,14 @@ router
 router
     .route("/delete-book") // delete existing book
     .delete(libraryController.deleteBook)
-// GET BOOK COUNT
+
+router
+    .route("/get-all-book-count")
+    .get(libraryController.getAllBooksCount)
+
+router
+    .route("/get-mayalayam-books")
+    .get(libraryController.getAllMalayalamBooks)
 // GET NEW BOOKS => published year = current year
 // SEARCH BOOKS 
 // 
