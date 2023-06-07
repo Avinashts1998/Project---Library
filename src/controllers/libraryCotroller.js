@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 dotenv.config({ path: "./config.env" })
 
 
+// get all books
 
 exports.getAllBooks = async (req, res, next) => {
     try {
@@ -30,6 +31,7 @@ exports.getAllBooks = async (req, res, next) => {
     }
 }
 
+// insert new books
 
 exports.insertBooks = async (req, res, next) => {
     try {
@@ -55,6 +57,77 @@ exports.insertBooks = async (req, res, next) => {
         console.log(error)
     }
 
+}
 
+// update existing books
+
+exports.updateBooks = async (req, res, next) => {
+    try {
+        const argsData = (req.body.args) ? req.body.args : "";
+        const authData = (argsData.auth) ? argsData.auth : "";
+        const paramsData = (argsData.params) ? argsData.params : "";
+
+        LibraryFns = new LibraryFunction()
+
+        const dbName = process.env.LIBRARY_DATABASE
+        const booksColection = "Books"
+
+        const updatedData = await LibraryFns.updateBooks(dbName, booksColection, paramsData)
+
+        res.status(200).json({
+            success: true,
+            data: paramsData,
+            message: "Books updated succesfully.."
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
 
 }
+
+// delete existing books
+
+exports.deleteBook = async (req, res) => {
+    try {
+        const argsData = (req.body.args) ? req.body.args : "";
+        const paramsData = (argsData.params) ? argsData.params : "";
+
+        LibraryFns = new LibraryFunction()
+
+        const dbName = process.env.LIBRARY_DATABASE
+        const booksColection = "Books"
+
+        const data = await LibraryFns.deleteBook(dbName, booksColection, paramsData)
+        let deleteMsg;
+        let succesMsg;
+
+        if (data != 'No Book Found on this id') {
+            deleteMsg = "Book Deleted"
+        } else {
+            deleteMsg = "No Books Deleted!"
+        }
+        if (deleteMsg == "Book Deleted") {
+            succesMsg = true;
+        } else {
+            succesMsg = false;
+        }
+
+        res.status(200).json({
+            success: succesMsg,
+            message: deleteMsg,
+            data: data,
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+
+
+
+
+
