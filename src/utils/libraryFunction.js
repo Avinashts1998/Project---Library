@@ -17,14 +17,10 @@ class LibraryFunction {
             const librrayDB = await dbConnection.useDb(dbName)
 
             const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
-            let res = ""
-            const result = await booksModel.find({}).then((data) => {
-                res = data
-            })
 
-            console.log(res)
+            const result = await booksModel.find()
 
-            return res;
+            return result;
 
         } catch (error) {
             console.log(error)
@@ -131,13 +127,13 @@ class LibraryFunction {
             const delete_book = { '_id': book_id }
             if (paramsData.action == 'delete') {
                 await booksModel.findOneAndDelete(
-                    delete_book).then((data)=>{
-                         if (data != null) {
+                    delete_book).then((data) => {
+                        if (data != null) {
                             result = data
                             console.log(result)
-                         } else {
+                        } else {
                             result = "No Book Found on this id"
-                         }
+                        }
 
                     })
             }
@@ -149,9 +145,62 @@ class LibraryFunction {
         }
     }
 
+    /**
+          * Get All Books Count
+          * @author Avinash TS
+          * @Since June 2023
+          * @param {ArgsData, AuthData}
+          * @return Numerical value of all book (count)
+          */
+
+    getAllBooksCount = async (dbName, booksColection) => {
+        try {
+
+            const dbConnection = await global.clientConnection
+            const librrayDB = await dbConnection.useDb(dbName)
+
+            const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
+
+            const count = await booksModel.find().count()
+
+            return count;
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    /**
+          * Get All Books Count
+          * @author Avinash TS
+          * @Since June 2023
+          * @param {ArgsData, AuthData}
+          * @return Numerical value of all book (count)
+          */
+
+    getAllMalayalamBooks = async (dbName, booksColection, paramsData) => {
+        try {
+            const languiageKey = paramsData.language_key
+            const dbConnection = await global.clientConnection
+            const librrayDB = await dbConnection.useDb(dbName)
+
+            const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
+
+            let result = await booksModel.find({ language: languiageKey })
+            if (result.length <= 0) {
+                result = "No Books Available for" + " " + languiageKey + " " + "Language"
+            }
+            console.log(result)
+            return result;
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
-    
+
 
 }
 
