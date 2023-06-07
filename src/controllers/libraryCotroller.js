@@ -56,7 +56,6 @@ exports.insertBooks = async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
 }
 
 // update existing books
@@ -83,7 +82,6 @@ exports.updateBooks = async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
 }
 
 // delete existing books
@@ -122,8 +120,59 @@ exports.deleteBook = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-
 }
+
+
+exports.getAllBooksCount = async (req, res, next) => {
+    try {
+        const argsData = (req.body.args) ? req.body.args : "";
+        const paramsData = (argsData.params) ? argsData.params : "";
+
+        LibraryFns = new LibraryFunction()
+
+        const dbName = process.env.LIBRARY_DATABASE
+        const booksColection = "Books"
+
+        const count = await LibraryFns.getAllBooksCount(dbName, booksColection)
+
+
+        res.status(200).json({
+            success: true,
+            data: count,
+            message: 'Count fetch succesfully'
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+exports.getAllMalayalamBooks = async (req, res, next) => {
+    try {
+        const argsData = (req.body.args) ? req.body.args : "";
+        const paramsData = (argsData.params) ? argsData.params : "";
+
+        LibraryFns = new LibraryFunction()
+
+        const dbName = process.env.LIBRARY_DATABASE
+        const booksColection = "Books"
+
+        const count = await LibraryFns.getAllMalayalamBooks(dbName, booksColection, paramsData)
+
+
+        res.status(200).json({
+            success: true,
+            data: count,
+            message: 'Count fetch succesfully'
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 
 
