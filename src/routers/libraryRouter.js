@@ -27,8 +27,13 @@ router
     .get(libraryController.getAllBooksCount)
 
 router
-    .route("/get-mayalayam-books")
-    .get(libraryController.getAllMalayalamBooks)
+    .route("/books-language-filter")
+    .get(libraryController.getBooksByLanguage)
+
+router
+    .route("/books-author-filter")
+    .get(libraryController.filterBookByAuthor)
+
 // GET NEW BOOKS => published year = current year
 // SEARCH BOOKS 
 // 

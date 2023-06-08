@@ -172,14 +172,14 @@ class LibraryFunction {
     }
 
     /**
-          * Get All Books Count
+          * Get  Books By Language
           * @author Avinash TS
           * @Since June 2023
           * @param {ArgsData, AuthData}
-          * @return Numerical value of all book (count)
+          * @return books under filter language
           */
 
-    getAllMalayalamBooks = async (dbName, booksColection, paramsData) => {
+    getBooksByLanguage = async (dbName, booksColection, paramsData) => {
         try {
             const languiageKey = paramsData.language_key
             const dbConnection = await global.clientConnection
@@ -190,6 +190,34 @@ class LibraryFunction {
             let result = await booksModel.find({ language: languiageKey })
             if (result.length <= 0) {
                 result = "No Books Available for" + " " + languiageKey + " " + "Language"
+            }
+            console.log(result)
+            return result;
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /**
+         * Get  Books By Author
+         * @author Avinash TS
+         * @Since June 2023
+         * @param {ArgsData, AuthData}
+         * @return books under filter Author
+         */
+
+    filterBookByAuthor = async (dbName, booksColection, paramsData) => {
+        try {
+            const auther_key = paramsData.auther_key
+            const dbConnection = await global.clientConnection
+            const librrayDB = await dbConnection.useDb(dbName)
+
+            const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
+
+            let result = await booksModel.find({ auther: auther_key })
+            if (result.length <= 0) {
+                result = "No Books Available for Filter" + " " + auther_key
             }
             console.log(result)
             return result;
