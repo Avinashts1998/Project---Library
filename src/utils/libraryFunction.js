@@ -107,6 +107,41 @@ class LibraryFunction {
     }
 
     /**
+      * Update Book Status 
+      * @author Avinash TS
+      * @Since June 2023
+      * @param {ArgsData, AuthData}
+      * @return Book Collection
+      */
+
+    updateBookStatus = async (paramsData, booksColection, dbName) => {
+
+        const book_id = (paramsData._id) ? paramsData._id : "";
+        const statusCode = (paramsData.book_status) ? paramsData.book_status : 0;
+
+        const dbConnection = await global.clientConnection
+        const librrayDB = await dbConnection.useDb(dbName)
+
+        const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
+
+        const updateObj = {
+            "book_status": statusCode
+        }
+
+        const book = { '_id': book_id }
+
+        let updateBook = await booksModel.findOneAndUpdate(
+            book,
+            updateObj,
+            { new: true, useFindAndModify: false }).then((data) => {
+                console.log(data)
+            })
+
+        console.log("Book Updated")
+
+    }
+
+    /**
       * Delete existing Book
       * @author Avinash TS
       * @Since June 2023

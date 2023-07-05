@@ -2,6 +2,8 @@ const express = require('express')
 const dotenv = require('dotenv')
 const path = require('path')
 const router = require('./src/routers/libraryRouter')
+const memberRouter = require('./src/routers/membersRoute')
+const userRouter = require('./src/routers/usersRouter')
 
 
 
@@ -17,7 +19,11 @@ app.set("view engine", "ejs");
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 app.use('/', router)
+app.use('/member', memberRouter)
+app.use('/users', userRouter)
+
 
 app.listen(process.env.PORT, () => {
     console.log(`App listening to the port :` + " " + process.env.PORT + " " + "Enne Kollathirikkan Pattumo!!!")

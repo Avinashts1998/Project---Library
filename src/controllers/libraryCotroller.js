@@ -84,6 +84,29 @@ exports.updateBooks = async (req, res, next) => {
     }
 }
 
+// Update Book Status //
+
+exports.updateBookStatus = async (req, res) => {
+    const argsData = (req.body.args) ? req.body.args : "";
+    const paramsData = (argsData.params) ? argsData.params : "";
+
+    LibraryFns = new LibraryFunction()
+
+    const dbName = process.env.LIBRARY_DATABASE
+    const booksColection = "Books"
+
+    await LibraryFns.updateBookStatus(paramsData, booksColection, dbName)
+
+    res.status(200).json({
+        success: true,
+        data: "Book Status Updated"
+    })
+
+
+
+
+}
+
 // delete existing books
 
 exports.deleteBook = async (req, res) => {
