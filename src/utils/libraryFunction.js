@@ -42,11 +42,23 @@ class LibraryFunction {
 
             const booksModel = librrayDB.model(booksColection, Books_model.BookSchema, booksColection)
 
-            const result = await booksModel.create(paramsData).then((data) => {
-                console.log("Data Inserted====>", data)
-            })
 
-            return paramsData;
+            
+            const existing_book = await booksModel.findOne({ book_name: paramsData.book_name, book_no: paramsData.book_no })
+            console.log(existing_book)
+            let result
+            if (existing_book) {
+                result = "book exist"
+            } else {
+                await booksModel.create(paramsData).then((data) => {
+                    console.log("Data Inserted====>", data)
+                    result = data
+                })
+            }
+
+            return result;
+
+
         } catch (error) {
             console.log(error)
         }

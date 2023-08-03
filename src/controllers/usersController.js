@@ -27,6 +27,8 @@ exports.registerUser = async (req, res) => {
             })
         }
 
+        
+
         const userModel = librrayDB.model(userCollection, UserModel.UserSchema, userCollection)
         const existingUser = await userModel.findOne({ email })
 
@@ -61,5 +63,32 @@ exports.registerUser = async (req, res) => {
         console.log(error)
     }
 
+}
+
+
+
+
+
+exports.loginUser = async (req, res) => {
+    try {
+        const argsData = (req.body.args) ? req.body.args : "";
+        const paramsData = (argsData.params) ? argsData.params : "";
+
+        const username = paramsData.username;
+        const password = paramsData.password;
+
+
+        if (!(username && password)){
+            return res.status(409).json({
+                message : "Login Failed, Please enter credentiasl"
+            })
+        }
+
+
+
+
+    } catch (error) {
+        console.log(error)
+    }
 }
 

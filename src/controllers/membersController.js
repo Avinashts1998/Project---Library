@@ -15,14 +15,6 @@ exports.createMember = async (req, res) => {
         const memberCollection = "Mambers"
 
         const result = await MemberFns.createMember(dbName, memberCollection, paramsData)
-        console.log(result)
-
-        res.status(200).json({
-            success: true,
-            data: result,
-            message: "Data inserted succesfully"
-        })
-
 
     } catch (error) {
         console.log(error)

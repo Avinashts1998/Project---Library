@@ -31,7 +31,7 @@ exports.getAllBooks = async (req, res, next) => {
     }
 }
 
-// insert new books
+// insert new books //
 
 exports.insertBooks = async (req, res, next) => {
     try {
@@ -48,9 +48,8 @@ exports.insertBooks = async (req, res, next) => {
         const data = await LibraryFns.insertBooks(dbName, booksColection, paramsData)
 
         res.status(200).json({
-            success: true,
-            data: data,
-            message: "Books Inserted Succesfully"
+            message: "success",
+            data: data
         })
 
     } catch (error) {
@@ -120,8 +119,8 @@ exports.deleteBook = async (req, res) => {
         const booksColection = "Books"
 
         const data = await LibraryFns.deleteBook(dbName, booksColection, paramsData)
-        let deleteMsg;
-        let succesMsg;
+        let deleteMsg; // simple threading
+        let succesMsg; // simple threading
 
         if (data != 'No Book Found on this id') {
             deleteMsg = "Book Deleted"
