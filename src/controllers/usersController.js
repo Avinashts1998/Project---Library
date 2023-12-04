@@ -7,12 +7,11 @@ const dotenv = require('dotenv')
 dotenv.config({ path: "./config.env" })
 
 
-
 exports.registerUser = async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body.args.params
 
-        const UserFns = new UserFunction()
+
 
         const dbName = process.env.LIBRARY_DATABASE
         const userCollection = "Users"
@@ -27,7 +26,7 @@ exports.registerUser = async (req, res) => {
             })
         }
 
-        
+
 
         const userModel = librrayDB.model(userCollection, UserModel.UserSchema, userCollection)
         const existingUser = await userModel.findOne({ email })
@@ -49,19 +48,21 @@ exports.registerUser = async (req, res) => {
             { user_id: user._id, email },
             process.env.TOKEN_KEY,
             {
-                expiresIn: "2h"
+                expiresIn: "60"
             }
         )
 
         user.token = token
         res.status(200).json(user)
 
-
-
-
     } catch (error) {
         console.log(error)
     }
+
+}
+
+
+exports.validateToken = async () => {
 
 }
 
@@ -77,12 +78,30 @@ exports.loginUser = async (req, res) => {
         const username = paramsData.username;
         const password = paramsData.password;
 
+        console.log(username)
+        console.log(password)
 
-        if (!(username && password)){
+
+        if (!(username && password)) {
             return res.status(409).json({
-                message : "Login Failed, Please enter credentiasl"
+                message: "Login Failed, Please enter credentiasl"
             })
         }
+
+        const dbName = process.env.LIBRARY_DATABASE
+        const userCollection = "Users"
+
+        const dbConnection = await global.clientConnection
+        const librrayDB = await dbConnection.useDb(dbName)
+
+        const userModel = librrayDB.model(userCollection, UserModel.UserSchema, userCollection)
+
+        let userFetch = await userModel.findOne({ '_id': '64a2d6c07ad8ce18ed2a4123' }).then((data) => {
+            console.log(data)
+        })
+        //  console.log(userFetch)
+
+
 
 
 

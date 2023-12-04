@@ -57,3 +57,11 @@ exports.getAllBooks = async (argsData, authData) => {
     return books;
 
 }
+
+
+exports.getBloodGroups = (req, res) => {
+    let blood_groups = []
+    const bloodGroups = ['A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-']
+    return bloodGroups;
+}
+

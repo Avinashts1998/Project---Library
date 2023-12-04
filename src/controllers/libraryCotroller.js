@@ -18,10 +18,42 @@ exports.getAllBooks = async (req, res, next) => {
         const booksColection = "Books"
 
         const data = await LibraryFns.getAllBooks(dbName, booksColection)
+        console.log(data)
 
+        const sortedArray = []
 
+        data.forEach((item) => {
+            if(sortedArray[0]?.bookNo > item.bookNo){
+                sortedArray.unshift(item)
+            } else {
+                sortedArray.push(item)
+            }
+        })
+        console.log(sortedArray)
+        //    const reversedArry = []
+
+        /*    for (let i = data.length - 1; i >= 0; i--) {
+                reversedArry.push(data[i])
+            }
+            let book_data = reversedArry.map((book) => {
+                return ({
+                    book_id: book._id,
+                    bookName: book.book_name,
+                    bookNo: book.book_no,
+                    auther: book.auther,
+                    publications: book.publications,
+                    category: book.category,
+                    shelf_number: book.shelf_number,
+                    rowNo: book.rowNo,
+                    published_year: book.published_year,
+                    language: book.language,
+                    description: book.description,
+                    image: book.image
+                })
+            })
+    */
         res.status(200).json({
-            data: data,
+            data: sortedArray,
             success: true,
             result: true
         })
@@ -48,7 +80,7 @@ exports.insertBooks = async (req, res, next) => {
         const data = await LibraryFns.insertBooks(dbName, booksColection, paramsData)
 
         res.status(200).json({
-            message: "success",
+            message: "Book Inserted",
             data: data
         })
 

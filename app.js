@@ -4,6 +4,7 @@ const path = require('path')
 const router = require('./src/routers/libraryRouter')
 const memberRouter = require('./src/routers/membersRoute')
 const userRouter = require('./src/routers/usersRouter')
+const bloodBank = require('./src/routers/bloodBankRouter')
 
 
 
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/', router)
 app.use('/member', memberRouter)
 app.use('/users', userRouter)
+app.use('/blood', bloodBank)
+
 
 
 app.listen(process.env.PORT, () => {
